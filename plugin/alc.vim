@@ -1,6 +1,12 @@
+if exists("loaded_alc")
+  finish
+endif
+let g:loaded_alc = 1
+
+let s:plugin_dir = expand("<sfile>:p:h:h")
+
 fun! s:SearchAlc(words)
-  let comm = "ruby1.8 /home/m/.vim/plugin/alc.rb " . a:words
-  echo system(comm)
+  echo system("ruby " . s:plugin_dir . "/ruby/alc.rb " . a:words)
 endf
 
 fun! s:SearchAlcCursor()

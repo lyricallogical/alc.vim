@@ -1,9 +1,8 @@
-#!/usr/bin/ruby1.8
+#!/usr/bin/env ruby
+
 require "nokogiri"
 require "uri"
 require "optparse"
-
-begin
 
 $cond = "[false]"
 OptionParser.new do |opt|
@@ -22,8 +21,4 @@ list.xpath("//span[@class!='midashi' and @class!='wordclass']").map{|n|n.inner_h
 list.xpath("//li").map{|n|n.inner_html += "\n" }
 list.xpath("//span[@class='kana']").map{|n|n.remove}
 list.xpath("//br").map{|n|n.before("this_is_dummy\n")}
-puts list.text.map{|l|l.strip}.select{|l|!l.empty?}.map{|l|l.gsub(/this_is_dummy/,"")}
-
-rescue
-  exit
-end
+puts list.map{|l|l.text.strip}.select{|l|!l.empty?}.map{|l|l.gsub(/this_is_dummy/,"")}
