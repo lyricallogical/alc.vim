@@ -16,3 +16,7 @@ endf
 
 command! -nargs=* SearchAlc call s:SearchAlc(<q-args>)
 command! -nargs=0 SearchAlcCursor call s:SearchAlcCursor()
+
+nmap <Leader>alc :SearchAlcCursor<CR>
+vmap <Leader>alc "oy:SearchAlc <C-R>o<CR>gv
+
