@@ -6,8 +6,8 @@ let g:loaded_alc = 1
 let s:plugin_dir = expand("<sfile>:p:h:h")
 
 fun! s:SearchAlc(words)
-  " Open new 20 line buffer to hold the results
-  below 20new
+  " Open new lines buffer to hold the results
+  execute ":below " . (&lines / 2) . "new"
   setlocal buftype=nofile noswapfile wrap ft=
 
   " Press q to close the results buffer
