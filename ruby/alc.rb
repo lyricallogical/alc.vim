@@ -16,15 +16,15 @@ class AlcResults
     lis = lis[0...limit] if limit
 
     # Remove some stuff we don't care about
-    lis.css("span.kana, span.exp").each(&:remove)
+    lis.each{|li| li.css("span.kana, span.exp").each(&:remove) }
 
     # Store translations as a hash of "from language" => "to language" pairs
-    @all = {}
-    lis.each{|li| @all[li.css(".midashi").text] = translation(li)}
+    @all = []
+    lis.each{|li| @all << [li.css(".midashi").text, translation(li)] }
   end
 
   def to_s
-    @all.each_pair.map{|k,v| "#{k}\n#{v}"}.join("\n")
+    @all.map{|k,v| "#{k}\n#{v}"}.join("\n")
   end
 
   private
@@ -59,8 +59,7 @@ class AlcResults
     # Ordered list: Convert to a numbered list
     # Exception: If there's just one entry (just a text node, no <li> elements) convert to a single bullet point
     def format_ol(ancestor_el)
-      ancestor_el.at("li") ? ancestor_el.css("li").each_with_index.map{|li,i| "    #{i+1}. #{li.text}\n"}.join
-                           : format_entry(ancestor_el)
+      ancestor_el.at("li") ? ancestor_el.css("li").each_with_index.map{|li,i| "    #{i+1}. #{li.text}\n"}.join : format_entry(ancestor_el)
     end
 
     # Convert the text of an element into indented bullet point(s)
