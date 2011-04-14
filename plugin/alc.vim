@@ -6,8 +6,9 @@ let g:loaded_alc = 1
 let s:plugin_dir = expand("<sfile>:p:h:h")
 
 function! s:SearchAlc(words)
-  " Open new lines buffer to hold the results
-  execute ":below " . (&lines / 2) . "new"
+  " Open new buffer to hold the results. Set the height to be half the height of the Vim window (minus one for the
+  " statusline), but limit to 20 lines.
+  execute ":below " . min([&lines/2 - 1, 20]) . "new"
   setlocal buftype=nofile noswapfile wrap ft=
 
   " Press q to close the results buffer
