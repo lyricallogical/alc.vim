@@ -19,19 +19,18 @@ class AlcResults
     lis.each{|li| li.css("span.kana, span.exp").each(&:remove) }
 
     # Store translations as a hash of "from language" => "to language" pairs
-    @all = []
-    lis.each{|li| @all << [li.css(".midashi").text, translation(li)] }
+    @all = lis.map{|li| [li.css(".midashi").text, translation(li)]}
   end
 
   def to_s
-    @all.map{|k,v| "#{k}\n#{v}"}.join("\n")
+    @all.map{|a,b| "#{a}\n#{b}"}.join("\n")
   end
 
   private
-    #Returns a formatted string representation of a single Alc translation
+    # Returns a formatted string representation of a single Alc translation
     def translation(li)
       if li.at(".wordclass")
-        #Translation is one or more .wordclass elements, each one followed by one or more <ol> elements
+        # Translation is one or more .wordclass elements, each one followed by one or more <ol> elements
         li.css("div").children.map do |el|
           if el["class"] == "wordclass"
             el.text + "\n"
@@ -40,13 +39,13 @@ class AlcResults
           end
         end.join
       elsif li.at("ul")
-        #Single <ul> element
+        # Single <ul> element
         format_ul(li)
       elsif li.at("ol")
-        #One or more <ol> elements
+        # One or more <ol> elements
         format_ol(li)
       elsif li.at("div")
-        #Just a single text node
+        # Just a single text node
         format_entry(li.css("div"))
       end
     end

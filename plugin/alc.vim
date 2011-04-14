@@ -5,7 +5,7 @@ let g:loaded_alc = 1
 
 let s:plugin_dir = expand("<sfile>:p:h:h")
 
-fun! s:SearchAlc(words)
+function! s:SearchAlc(words)
   " Open new lines buffer to hold the results
   execute ":below " . (&lines / 2) . "new"
   setlocal buftype=nofile noswapfile wrap ft=
@@ -20,7 +20,7 @@ fun! s:SearchAlc(words)
   normal gg
 endf
 
-fun! s:SearchAlcCursor()
+function! s:SearchAlcCursor()
   let word = expand("<cword>")
   call s:SearchAlc(word)
 endf
